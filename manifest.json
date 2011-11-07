@@ -1,0 +1,29 @@
+{
+    "name": "Vimeo Video Downloader",
+    "version": "1.0",
+    "description": "Download video from http://vimeo.com",
+    "browser_action": {
+        "default_icon": "icon.png",
+        "popup":"popup.html"
+
+    },
+    "content_scripts": [
+        {
+            "matches": ["http://*/*"],
+            "js": ["jquery.js", "main.js"],
+            "run_at": "document_end",
+            "all_frames": true
+        }
+    ],
+    "permissions": [
+        "http://vimeo.com/",
+        "tabs"
+    ],
+
+    "homepage_url": "http://sul4bh.wordpress.com",
+    "icons": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    }
+}

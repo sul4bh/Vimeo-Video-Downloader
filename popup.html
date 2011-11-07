@@ -1,0 +1,128 @@
+<style>
+    body {
+        min-width:357px;
+        overflow-x:hidden;
+        font: 12px Arial;
+    }
+
+    a {
+        text-decoration:none;
+        color:inherit;
+    }
+
+    #error
+    {
+        background-image: -webkit-linear-gradient(top,#dd4b39,#d14836);
+        color: #fff;
+        cursor: default;
+        display: inline-block;
+        font-family: arial, sans-serif;
+        font-size: 11px;
+        font-weight: bold;
+        height: 27px;
+        line-height: 27px;
+        padding:0px 8px;
+        text-align: center;
+        text-shadow: rgba(0, 0, 0, 0.0976562) 0px 1px 0px;
+
+        display:none;
+    }
+
+    #loader
+    {
+        display:none;
+    }
+
+
+
+    #info
+    {
+        display:none;
+    }
+
+    #vid-title
+    {
+        font: bold 20px arial,sans-serif;
+        text-align:center;
+    }
+
+    #vid-image
+    {
+        width:320px;
+        height:auto;
+    }
+
+    #vid-download-bar
+    {
+        width:319px;
+        border-top:none;
+    }
+
+    .button
+    {
+        cursor:pointer;
+        margin:2px;
+        color: white;
+        text-transform: uppercase;
+        font: 13px arial,sans-serif;
+        vertical-align: middle;
+        padding: 5px 8px;
+        font-weight:bold;
+        text-shadow: 0 1px rgba(0, 0, 0, 0.1);
+        background-color:rgb(209,72,54);
+        background-image: -webkit-linear-gradient(top,#4d90fe,#4787ed);
+        border: 1px solid #3079ED;
+        display:inline-block;
+    }
+
+    .button:hover
+    {
+        background-image: -webkit-linear-gradient(top,#4d90fe,#357ae8);
+        border:1px solid #2f5bb7;
+    }
+
+</style>
+
+
+<script type="text/javascript " src="jquery.js"></script>
+
+<script type="text/javascript" src="main.js"></script>
+
+
+
+<body>
+
+<div id="error">
+    This extension only works on http://vimeo.com
+</div>
+
+<div id="loader">
+    <center>
+        <img src="ajax-loader.gif" alt="">
+        <br>
+        Loading Video Info...
+    </center>
+</div>
+
+<div id="info">
+    <center>
+        <div id="vid-title">
+        </div>
+        <img id="vid-image" src="" />
+        <div id="vid-download-bar">
+            <div id="vid-sd" class="button" style="">
+                Download SD
+            </div>
+            <div id="vid-hd" class="button">
+                Download HD
+            </div>
+        </div>
+
+    </center>
+</div>
+
+<script>
+    init();
+</script>
+
+</body>

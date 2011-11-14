@@ -1,6 +1,6 @@
 {
     "name": "Vimeo Video Downloader",
-    "version": "1.0",
+    "version": "1.0.2",
     "description": "Download video from http://vimeo.com",
     "browser_action": {
         "default_icon": "icon.png",

@@ -8,7 +8,6 @@ function showPhotos() {
     }
 }
 
-// See: http://www.flickr.com/services/api/misc.urls.html
 function constructImageURL(photo) {
     return "http://farm" + photo.getAttribute("farm") +
             ".static.flickr.com/" + photo.getAttribute("server") +
@@ -52,14 +51,20 @@ function getVideoXML(videoId)
                     window.open(getUrl+'/?q=sd','_newtab');
                 });
                 if (info.hd == '1')
-                    $("#vid-hd").click(function(){
+                {
+                    $("#vid-hd").show().click(function(){
                         window.open(getUrl+'/?q=hd','_newtab');
                     });
+                }
 
             }
 
 
-            );
+            ).error(function() { 
+                    $("#loader").hide();
+                    $("#error").html("Couldn't fetch XML. Error !");
+                    $("#error").show();
+            });
 
 }
 
@@ -74,8 +79,14 @@ function init()
             $("#error").show();
             return(-1);
         }
-        videoId = videoId[videoId.length-1];
 
+        videoId = videoId[videoId.length-1];
+        
+        if (isNaN(videoId))
+        {
+            $("#error").show();
+            return(-1); 
+        }
         $("#loader").show();
         var info = getVideoXML(videoId);
 

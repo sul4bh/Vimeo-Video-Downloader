@@ -32,22 +32,20 @@ function extractInfo(responseXMl)
     return info;
 }
 
-function setCookie(cookie)
+function setCookie()
 {
     var cookieDetail = {
-        "url" : "http" + (cookie.secure ? "s" : "") + "://vimeo.com" + cookie.path,
-        "name" : cookie.name,
-        "value" : cookie.value,
-        "domain" : cookie.domain,
-        "path" : cookie.path,
-        "secure" : cookie.secure,
-        "httpOnly" : cookie.httpOnly,
-        "expirationDate": (cookie.expirationDate ? cookie.expirationDate : 1646756510)
+        "url" : "http://vimeo.com",
+        "name" : "v6",
+        "value" : "1",
+        "domain" : ".vimeo.com",
+        "path" : "/",
+        "expirationDate": 1355244471
     }
 
     chrome.cookies.set(cookieDetail);
-    console.log("------------------");
-    console.log(cookieDetail);
+//    console.log("------------------");
+//    console.log(cookieDetail);
 
 }
 
@@ -64,24 +62,28 @@ function getVideoXML(videoId)
      Step4. Restore cookie from the cookieJar
      */
 
-    var cookieJar = [];
+//    var cookieJar = [];
 
     //fetch all cookies
-    chrome.cookies.getAll({},function(cookie){
-        cookie.forEach(function(item){
-            cookieJar.push(item)
-        });
-    })
+//    chrome.cookies.getAll({},function(cookie){
+//        cookie.forEach(function(item){
+//            cookieJar.push(item)
+//        });
+//    })
 
 
     //the call to cookies API above is asynchronous. We hope that the call is executed within 2 sec.
-    setTimeout(function(){
-        cookieJar.forEach(function(cookie){
-            var url = "http" + (cookie.secure ? "s" : "") + "://vimeo.com" + cookie.path;
-            chrome.cookies.remove({"url":url,"name":cookie.name},function(result){
-            });
-        });
-    },2000);
+//    setTimeout(function(){
+//        cookieJar.forEach(function(cookie){
+//            var url = "http" + (cookie.secure ? "s" : "") + "://vimeo.com" + cookie.path;
+//            console.log(url);
+//            console.log(cookie.name);
+////            chrome.cookies.remove({"url":url,"name":cookie.name},function(result){
+////            });
+//        });
+//    },2000);
+                chrome.cookies.remove({"url":"http://vimeo.com","name":"v6"});
+
 
     $.get(
         loadUrl,
@@ -105,7 +107,7 @@ function getVideoXML(videoId)
                     window.open(getUrl+'/?q=hd','_newtab');
                 });
             }
-
+            setCookie();
         }
 
     ).error(function() {
@@ -113,12 +115,7 @@ function getVideoXML(videoId)
             $("#error").html("Couldn't fetch XML. Error !");
             $("#error").show();
         })
-        .complete(function(){
-            cookieJar.forEach(function(cookie){
-                console.log(cookie);
-                setCookie(cookie);
-            });
-        });
+
 }
 
 function init()

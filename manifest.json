@@ -17,7 +17,9 @@
     ],
     "permissions": [
         "http://vimeo.com/",
-        "tabs"
+        "tabs",
+        "cookies",
+        "*://*.vimeo.com"
     ],
 
     "homepage_url": "http://sul4bh.wordpress.com",

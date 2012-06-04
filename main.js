@@ -20,7 +20,7 @@ function processData(data){
         + '&codecs=H264,VP8,VP6&type=moogaloop_local&embed_location=';
 
     var hd = false;
-    if ($.inArray('hd',data.qualities))
+    if ($.inArray('hd',data.qualities) != -1)
     {
         hd = true;
     }

@@ -1,3 +1,8 @@
+//start on popup load
+$(function(){
+    init();
+});
+
 function getVideoInfo(){
     var id;
     var time;
@@ -40,34 +45,30 @@ function initUI(downUrl, hd, thumb, title){
     $("#loader").fadeOut(function()
     {
         $("#info").show();
+        showCount();
     });
 
     $("#vid-image").attr("src",thumb);
     $("#vid-title").html(title);
 
     $("#vid-sd").show().click(function(){
+        incUseCount();
         window.open(downUrl+'&quality=sd','_newtab');
     });
 
     if (hd){
         $("#vid-hd").show().click(function(){
+            incUseCount();
             window.open(downUrl+'&quality=hd','_newtab');
         });
 
     }
 }
 
-
 function init(){
     chrome.tabs.getSelected(null, function(tab) {
         videoId = tab.url;
         videoId = videoId.split('/');
-
-        if (videoId[2].toLowerCase() != "vimeo.com")
-        {
-            $("#error").show();
-            return(-1);
-        }
 
         videoId = videoId[videoId.length-1];
 
@@ -76,10 +77,42 @@ function init(){
             $("#error").show();
             return(-1);
         }
+
+
+
         $("#loader").show();
 
         var info = getVideoInfo();
 
     });
+}
 
+
+function incUseCount(){
+
+    //synced storage namespace
+    var storage = chrome.storage.sync;
+
+    storage.get('useCount',function(data){
+        var currentCount = data.useCount;
+        currentCount = currentCount?currentCount:0;
+
+        storage.set({'useCount': ++currentCount}, function(){
+        });
+
+    });
+}
+
+
+function showCount(){
+    var storage = chrome.storage.sync;
+
+    storage.get('useCount',function(data){
+        var currentCount;
+        currentCount = data.useCount;
+        currentCount = currentCount?currentCount:0;
+        $('#count').html(currentCount);
+        $('#use-count').show();
+
+    });
 }

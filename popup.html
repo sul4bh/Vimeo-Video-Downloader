@@ -81,6 +81,19 @@
         border:1px solid #2f5bb7;
     }
 
+    #use-count{
+        display: none;
+        color:#999;
+        background: #fff url('thick-dash.png') no-repeat;
+        padding:5px;
+        margin:5px;
+    }
+
+    #count{
+        color:#333;
+    }
+
+
 </style>
 
 
@@ -94,7 +107,7 @@
 <body>
 
 <div id="error">
-    This extension only works on video page of http://vimeo.com
+    This is not a Vimeo video page.
 </div>
 
 <div id="loader">
@@ -112,18 +125,17 @@
         <img id="vid-image" src="" />
         <div id="vid-download-bar">
             <div id="vid-sd" class="button" >
-                Download SD
+                Open SD
             </div>
             <div id="vid-hd" class="button" style="display:none">
-                Download HD
+                Open HD
             </div>
+        </div>
+        <div id="use-count">
+            You have used this extension <span id=count></span> times.
         </div>
 
     </center>
 </div>
-
-<script>
-    init();
-</script>
 
 </body>

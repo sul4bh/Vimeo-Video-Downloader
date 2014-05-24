@@ -1,3 +1,6 @@
+//Listen for any changes to the URL of any tab.
+chrome.tabs.onUpdated.addListener(checkForValidUrl);
+
 function checkForValidUrl(tabId, changeInfo, tab) {
     videoId = tab.url;
     videoId = videoId.split('/');
@@ -6,7 +9,5 @@ function checkForValidUrl(tabId, changeInfo, tab) {
     {
         chrome.pageAction.show(tabId)
     }
-};
+}
 
-// Listen for any changes to the URL of any tab.
-chrome.tabs.onUpdated.addListener(checkForValidUrl);

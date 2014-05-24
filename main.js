@@ -3,44 +3,34 @@ $(function(){
     init();
 });
 
-function getVideoInfo(){
+function getVideoInfo(videoId){
     var id;
     var time;
     var sig;
     var qualities;
 
-    chrome.tabs.getSelected(null, function(tab) {
-        chrome.tabs.sendRequest(tab.id, {action: "getDOM"}, function(response) {
-            processData(response);
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        var port = chrome.tabs.connect(tabs[0].id);
+        port.postMessage({dummy:0}); //dummy post
+        port.onMessage.addListener(function getResp(response) {
+            processData(videoId, response.videoURL);
         });
     });
 }
 
 
-function processData(data){
-    var downUrl = 'http://player.vimeo.com/play_redirect?'
-        + 'clip_id=' + data.id
-        + '&sig=' + data.sig
-        + '&time=' + data.time
-        + '&codecs=H264,VP8,VP6&type=moogaloop_local&embed_location=';
-
-    var hd = false;
-    if ($.inArray('hd',data.qualities) != -1)
-    {
-        hd = true;
-    }
-
-    var thumbUrlRequest = "http://vimeo.com/api/v2/video/"+data.id+".json";
+function processData(videoId, videoURL){
+    var thumbUrlRequest = "http://vimeo.com/api/v2/video/"+videoId+".json";
 
     $.get(
         thumbUrlRequest,
         function(response){
-            initUI(downUrl,hd,response[0].thumbnail_medium,response[0].title);
+            initUI(videoURL,response[0].thumbnail_medium,response[0].title);
         },'json');
 }
 
 
-function initUI(downUrl, hd, thumb, title){
+function initUI(downUrl, thumb, title){
 
     $("#loader").fadeOut(function()
     {
@@ -53,21 +43,15 @@ function initUI(downUrl, hd, thumb, title){
 
     $("#vid-sd").show().click(function(){
         incUseCount();
-        window.open(downUrl+'&quality=sd','_newtab');
+        window.open(downUrl,'_newtab');
+        window.open(downUrl,'_newtab');
     });
 
-    if (hd){
-        $("#vid-hd").show().click(function(){
-            incUseCount();
-            window.open(downUrl+'&quality=hd','_newtab');
-        });
-
-    }
 }
 
 function init(){
-    chrome.tabs.getSelected(null, function(tab) {
-        videoId = tab.url;
+    chrome.tabs.query({active: true}, function(tab) {
+        var videoId = tab[0].url;
         videoId = videoId.split('/');
 
         videoId = videoId[videoId.length-1];
@@ -82,7 +66,7 @@ function init(){
 
         $("#loader").show();
 
-        var info = getVideoInfo();
+        var info = getVideoInfo(videoId);
 
     });
 }

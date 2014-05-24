@@ -81,18 +81,17 @@
         border:1px solid #2f5bb7;
     }
 
-    #use-count{
-        display: none;
+    .dash{
         color:#999;
         background: #fff url('thick-dash.png') no-repeat;
         padding:5px;
         margin:5px;
+        padding-bottom: 0;
     }
 
-    #count{
+    .dark{
         color:#333;
     }
-
 
 </style>
 
@@ -123,16 +122,16 @@
         <div id="vid-title">
         </div>
         <img id="vid-image" src="" />
-        <div id="vid-download-bar">
+        <div id="vid-download-bar" style="margin-top: 5px;">
             <div id="vid-sd" class="button" >
-                Open SD
-            </div>
-            <div id="vid-hd" class="button" style="display:none">
-                Open HD
+                Download
             </div>
         </div>
-        <div id="use-count">
-            You have used this extension <span id=count></span> times.
+        <div class="dash">
+            The video will open in a new tab and you can <br><span class="dark"> Save (Ctrl + s or Cmd + s) </span>the video.
+        </div>
+        <div class="dash" id="use-count">
+            You have downloaded <span class="dark" id=count></span> videos.
         </div>
 
     </center>
